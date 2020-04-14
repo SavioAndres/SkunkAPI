@@ -1,0 +1,26 @@
+{
+    "name": "savioandres/api_php",
+    "description": "PHP framework for organizing code in the project API.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sávio Andres",
+            "email": "savioandres@hotmail.com",
+            "role": "Developer",
+            "homepage": "https://github.com/SavioAndres"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Controller\\": "controller/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.3.8"
+    }
+}
