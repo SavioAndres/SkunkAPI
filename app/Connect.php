@@ -29,7 +29,7 @@ class Connect
             $sql = 'mysql:host=' . self::$HOST . ';dbname=' . self::$NAME . ';charset=utf8';
             self::$instance = new \PDO($sql, self::$USER, self::$PASS);
             self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
+        } catch(\PDOException $exception) {
             die($exception->getMessage());
         }
     }

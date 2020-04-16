@@ -2,4 +2,4 @@
 
 $cl = new Controller\About();
 $cl->request($request);
-$cl->run($method);
+$cl->method($method);

@@ -12,23 +12,20 @@ class About extends Routes implements IMethod
 
     public function get()
     {
-        if (parent::parammeter('edit'))
-        {
-            $select = parent::select('SELECT * FROM test');
-            var_dump($select);
-        }
+        echo parent::select('SELECT * FROM test');
     }
 
     public function post() : void
     {
-        //INSERT INTO test (name, text) VALUES (\'primeiro2\', \'ttttt2\')
-        var_dump($_POST['test']);
+        var_dump(_POST('test'));
+        //file_get_contents('php://input')
     }
 
     public function put() : void
     {
-        if ($this->request[0] == 'edit')
+        if (parent::parammeter('edit'))
         {
+            var_dump(_PUT('test'));
             echo 'Em edição';
         }
     }
@@ -40,7 +37,7 @@ class About extends Routes implements IMethod
 
     public function delete() : void
     {
-        
+        echo(file_get_contents('php://input'));
     }
 
 }

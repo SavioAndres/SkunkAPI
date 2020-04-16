@@ -6,7 +6,7 @@ use App\DataAccessObject;
 
 class Routes extends DataAccessObject
 {
-    private $method;
+    private $method_;
     protected $request;
 
     public function __construct()
@@ -14,9 +14,9 @@ class Routes extends DataAccessObject
         $this->request = [];
     }
 
-    public function run(string $method) : void
+    public function method(string $method_) : void
     {
-        $this->method = $method;
+        $this->method_ = $method_;
         self::roter();
     }
 
@@ -29,22 +29,26 @@ class Routes extends DataAccessObject
     
     protected function roter() : void
     {
-        switch ($this->method)
+        switch ($this->method_)
         {
             case 'GET':
                 header('Content-Type: application/json');
                 $this->get();
                 break;
             case 'POST':
+                header('Content-Type: application/x-www-form-urlencoded');
                 $this->post();
                 break;
             case 'PUT':
+                header('Content-Type: application/x-www-form-urlencoded');
                 $this->put();
                 break;
             case 'PATCH':
+                header('Content-Type: application/x-www-form-urlencoded');
                 $this->patch();
                 break;
             case 'DELETE':
+                header('Content-Type: application/x-www-form-urlencoded');
                 $this->delete();
                 break;
             default:

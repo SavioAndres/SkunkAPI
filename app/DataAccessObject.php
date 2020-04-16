@@ -13,7 +13,7 @@ class DataAccessObject extends Connect
             //$sql = 'INSERT INTO test (name, text) VALUES (\'primeiro\', \'ttttt\')';
             $stmt = Connect::connect()->prepare($sql);
             $stmt->execute();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'erro'.$e->getMessage();
         }
     }
@@ -27,7 +27,7 @@ class DataAccessObject extends Connect
             $json = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             return \json_encode($json);
         } 
-        catch (Exception $e) 
+        catch (\Exception $e) 
         {
             echo 'erro'.$e->getMessage();
         }
