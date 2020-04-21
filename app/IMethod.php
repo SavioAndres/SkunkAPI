@@ -4,9 +4,9 @@ namespace App;
 
 interface IMethod
 {
-    public function get();
-    public function post();
-    public function put();
-    public function patch();
-    public function delete();
+    public function get(array $request) : string;
+    public function post(array $post) : void;
+    public function put(string $key, array $put) : void;
+    public function patch(string $key, array $patch) : void;
+    public function delete(string $key) : void;
 }

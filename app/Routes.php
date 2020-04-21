@@ -33,23 +33,23 @@ class Routes extends DataAccessObject
         {
             case 'GET':
                 header('Content-Type: application/json');
-                $this->get();
+                echo $this->get($this->request);
                 break;
             case 'POST':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->post();
+                $this->post($_POST);
                 break;
             case 'PUT':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->put();
+                $this->put($this->request[0], []);
                 break;
             case 'PATCH':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->patch();
+                $this->patch($this->request[0], []);
                 break;
             case 'DELETE':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->delete();
+                $this->delete($this->request[0]);
                 break;
             default:
                 
