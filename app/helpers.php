@@ -1,8 +1,10 @@
 <?php
 
-function _POST(string $name)
+function _POST() : object
 {
-    return filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING);
+    $post = $_POST;
+    $post = array_map(htmlspecialchars, $post);
+    return (object) $post;
 }
 
 function _PUT(string $name = '')

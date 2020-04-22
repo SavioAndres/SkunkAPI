@@ -7,24 +7,17 @@ use App\DataAccessObject;
 class Routes extends DataAccessObject
 {
     private $method_;
-    protected $request;
+    private $request_;
 
-    public function __construct()
+    public function __construct(string $method, array $request)
     {
-        $this->request = [];
-    }
+        $this->request_ = [];
+        array_shift($request);
+        array_shift($request);
+        $this->request_ = $request;
 
-    public function method(string $method_) : void
-    {
-        $this->method_ = $method_;
+        $this->method_ = $method;
         self::roter();
-    }
-
-    public function request(array $request) : void
-    {
-        array_shift($request);
-        array_shift($request);
-        $this->request = $request;
     }
     
     protected function roter() : void
@@ -33,32 +26,54 @@ class Routes extends DataAccessObject
         {
             case 'GET':
                 header('Content-Type: application/json');
-                echo $this->get($this->request);
+                echo $this->get($this->request_);
                 break;
             case 'POST':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->post($_POST);
+                $this->post((object) $_POST);
                 break;
             case 'PUT':
-                header('Content-Type: application/x-www-form-urlencoded');
-                $this->put($this->request[0], []);
+                if (self::isRequest()) {
+                    header('Content-Type: application/x-www-form-urlencoded');
+                    $this->put($this->request_, self::_PUT_PATCH());
+                } else {
+                    http_response_code(404);
+                }
                 break;
             case 'PATCH':
-                header('Content-Type: application/x-www-form-urlencoded');
-                $this->patch($this->request[0], []);
+                if (self::isRequest()) {
+                    header('Content-Type: application/x-www-form-urlencoded');
+                    $this->patch($this->request_, self::_PUT_PATCH());
+                } else {
+                    http_response_code(404);
+                }
                 break;
             case 'DELETE':
-                header('Content-Type: application/x-www-form-urlencoded');
-                $this->delete($this->request[0]);
+                if (self::isRequest()) {
+                    header('Content-Type: application/x-www-form-urlencoded');
+                    $this->delete($this->request_);
+                } else {
+                    http_response_code(404);
+                }
                 break;
             default:
-                
+                http_response_code(404);
                 break;
         }
     }
 
-    protected function parammeter(string $accion) : bool
+    protected function isRequest() : bool
     {
-        return !empty($this->request) && $this->request[0] == $accion;
+        return !empty($this->request_) && $this->request_[0] != '';
     }
+
+    private function _PUT_PATCH(): object
+    {
+        $put = array();
+        parse_str(file_get_contents('php://input'), $put);
+        return (object) $put;
+    }
+
+
+
 }
