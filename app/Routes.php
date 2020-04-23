@@ -26,11 +26,25 @@ class Routes extends DataAccessObject
         {
             case 'GET':
                 header('Content-Type: application/json');
-                echo $this->get($this->request_);
+                echo $this->get($this->request_); 
                 break;
             case 'POST':
                 header('Content-Type: application/x-www-form-urlencoded');
-                $this->post((object) $_POST);
+                
+                try {
+                    if ($_SERVER["CONTENT_TYPE"] == 'application/x-www-form-urlencoded') {
+                        $post = $_POST;
+                    } elseif ($_SERVER["CONTENT_TYPE"] == 'application/json') {
+                        $post = json_decode(file_get_contents('php://input'));
+                    } else {
+                        http_response_code(405);
+                        throw new \Exception('Only CONTENT TYPE \'x-www-form-urlencoded\' and \'json\' are accepted');
+                    }
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+
+                $this->post((object) $post);
                 break;
             case 'PUT':
                 if (self::isRequest()) {
@@ -71,6 +85,10 @@ class Routes extends DataAccessObject
     {
         $put = array();
         parse_str(file_get_contents('php://input'), $put);
+
+        if ($_SERVER["CONTENT_TYPE"] == 'application/json')
+            $put = json_decode(file_get_contents('php://input'));
+
         return (object) $put;
     }
 

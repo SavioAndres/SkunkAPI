@@ -10,10 +10,10 @@ class About extends Routes implements IMethod
 
     public function get(array $request) : string
     {
-        $sql = parent::_select('SELECT * FROM test');
         if (parent::isRequest())
             $sql = parent::_select('SELECT * FROM test WHERE id = '. $request[0]);
-        
+        else
+            $sql = parent::_select('SELECT * FROM test');
         return $sql;
     }
 
