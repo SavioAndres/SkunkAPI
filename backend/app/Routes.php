@@ -14,6 +14,7 @@ class Routes extends DataAccessObject
         $this->request_ = [];
         array_shift($request);
         array_shift($request);
+        array_shift($request);
         $this->request_ = $request;
 
         $this->method_ = $method;
@@ -26,46 +27,48 @@ class Routes extends DataAccessObject
         {
             case 'GET':
                 header('Content-Type: application/json');
-                echo $this->get($this->request_); 
+                $get = $_GET;
+                if (empty($get))
+                    $get = $this->request_;
+                echo $this->get($get);   
                 break;
             case 'POST':
                 header('Content-Type: application/x-www-form-urlencoded');
-                
                 try {
-                    if ($_SERVER["CONTENT_TYPE"] == 'application/x-www-form-urlencoded') {
+                    if (strpos($_SERVER["CONTENT_TYPE"], 'application/json') !== false) {
+                        $post = (array) json_decode(file_get_contents('php://input'));
+                    }
+                    elseif (strpos($_SERVER["CONTENT_TYPE"], 'application/x-www-form-urlencoded') !== false) {
                         $post = $_POST;
-                    } elseif ($_SERVER["CONTENT_TYPE"] == 'application/json') {
-                        $post = json_decode(file_get_contents('php://input'));
                     } else {
                         http_response_code(405);
                         throw new \Exception('Only CONTENT TYPE \'x-www-form-urlencoded\' and \'json\' are accepted');
                     }
+                    echo $this->post($post);
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
-
-                $this->post((object) $post);
                 break;
             case 'PUT':
+                header('Content-Type: application/x-www-form-urlencoded');
                 if (self::isRequest()) {
-                    header('Content-Type: application/x-www-form-urlencoded');
-                    $this->put($this->request_, self::_PUT_PATCH());
+                    echo $this->put($this->request_, self::_PUT_PATCH());
                 } else {
                     http_response_code(404);
                 }
                 break;
             case 'PATCH':
+                header('Content-Type: application/x-www-form-urlencoded');
                 if (self::isRequest()) {
-                    header('Content-Type: application/x-www-form-urlencoded');
-                    $this->patch($this->request_, self::_PUT_PATCH());
+                    echo $this->patch($this->request_, self::_PUT_PATCH());
                 } else {
                     http_response_code(404);
                 }
                 break;
             case 'DELETE':
+                header('Content-Type: application/x-www-form-urlencoded');
                 if (self::isRequest()) {
-                    header('Content-Type: application/x-www-form-urlencoded');
-                    $this->delete($this->request_);
+                    echo $this->delete($this->request_);
                 } else {
                     http_response_code(404);
                 }
@@ -89,7 +92,7 @@ class Routes extends DataAccessObject
         if ($_SERVER["CONTENT_TYPE"] == 'application/json')
             $put = json_decode(file_get_contents('php://input'));
 
-        return (object) $put;
+        return $put;
     }
 
 

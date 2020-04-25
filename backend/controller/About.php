@@ -17,27 +17,31 @@ class About extends Routes implements IMethod
         return $sql;
     }
 
-    public function post(object $post) : void
+    public function post(array $post) : string
     {
-        $sql = 'INSERT INTO test (name, text) VALUES (\''.$post->name.'\', \''.$post->text.'\')';
+        $sql = 'INSERT INTO test (name, text) VALUES (\''.$post['name'].'\', \''.$post['text'].'\')';
         parent::_insert($sql);
+        return '{"menssage" : "Enviado com sucesso!"}';
     }
 
-    public function put(array $request, object $put) : void
+    public function put(array $request, array $put) : string
     {
         var_dump($request);
         var_dump($put);
+        return '';
     }
 
-    public function patch(array $request, object $patch) : void
+    public function patch(array $request, array $patch) : string
     {
         var_dump($request);
         var_dump($patch);
+        return '';
     }
 
-    public function delete(array $request) : void
+    public function delete(array $request) : string
     {
         parent::_delete('DELETE FROM test WHERE id = ' . $request[0]);
+        return '';
     }
 
 }
