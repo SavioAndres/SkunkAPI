@@ -1,6 +1,6 @@
 {
     "name": "savioandres/api_php",
-    "description": "PHP framework for organizing code in the project API.",
+    "description": "Skunk API. PHP framework for organizing code in the project API.",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [

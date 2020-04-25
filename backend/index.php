@@ -1,4 +1,9 @@
 <?php
+/**
+ * Author: Sávio Andres
+ * Link: https://github.com/SavioAndres/SkunkAPI
+ * License: MIT
+ */
 
 include_once 'vendor/autoload.php';
 
