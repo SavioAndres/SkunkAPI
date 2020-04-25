@@ -10,7 +10,8 @@ class Index extends Routes implements IMethod
 
     public function get(array $request) : string
     {
-        return '{"Welcome": "Hello World!"}';
+        return '{"Welcome": "Bem vindo", "Framework" : "Skunk API",
+             "Body" : "Hello World!", "link" : "https://github.com/SavioAndres/SkunkAPI"}';
     }
 
     public function post(array $post) : string
