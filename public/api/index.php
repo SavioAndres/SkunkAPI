@@ -5,7 +5,7 @@
  * License: MIT
  */
 
-include_once 'vendor/autoload.php';
+include_once '../../vendor/autoload.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -14,13 +14,10 @@ if (empty($request[2])) $request[2] = 'index';
 
 $controller = ucfirst($request[2]);
 
-if (file_exists(__DIR__ . '/controller/' . $controller . '.php'))
-{
-    require __DIR__ . '/controller/' . $controller . '.php';
+if (file_exists(__DIR__ . '/../../controller/' . $controller . '.php')) {
+    require __DIR__ . '/../../controller/' . $controller . '.php';
     $obj = 'Controller\\' . $controller;
     new $obj($method, $request);
-}
-else
-{
+} else {
     http_response_code(404);
 }

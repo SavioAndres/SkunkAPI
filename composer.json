@@ -1,8 +1,10 @@
 {
-    "name": "savioandres/api_php",
+    "name": "savioandres/skunkapi",
     "description": "Skunk API. PHP framework for organizing code in the project API.",
+    "keywords": ["framework", "skunkapi", "skunk", "api"],
     "minimum-stability": "stable",
     "license": "MIT",
+    "type": "project",
     "authors": [
         {
             "name": "Sávio Andres",
@@ -14,7 +16,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Controller\\": "controller/"
+            "Controller\\": "controller/",
+            "Business\\": "business/"
         },
         "files": [
             "app/helpers.php"
