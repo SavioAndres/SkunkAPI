@@ -10,7 +10,7 @@ class About extends Routes implements IMethod
 
     public function get(array $request) : string
     {
-        var_dump($request);
+        echo parent::_select('SELECT * FROM test');
         return '{"Welcome": "Bem--- vindo", "Framework" : "Skunk API", '.
             '"Body" : "Hello World!", "link" : "https://github.com/SavioAndres/SkunkAPI"}';
     }

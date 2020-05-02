@@ -2,12 +2,8 @@
 
 namespace App;
 
-class Connect
+abstract class Connect
 {
-    private static $HOST = 'localhost';
-    private static $NAME = 'api_test';
-    private static $USER = 'root';
-    private static $PASS = '';
     private static $instance = null;
 
     protected static function connect() : object
@@ -26,12 +22,15 @@ class Connect
     private static function sqlConn() : void
     {
         try {
-            $sql = 'mysql:host=' . self::$HOST . ';dbname=' . self::$NAME . ';charset=utf8';
-            self::$instance = new \PDO($sql, self::$USER, self::$PASS);
+            $config = parse_ini_file(__DIR__.'/../.config', true)['DATABASE'];
+            $sql = $config['CONNECTION'] . ':host=' . $config['HOST'] . ';port=' . 
+                    $config['PORT'] . ';dbname=' . $config['DATABASE'] . ';charset=utf8';
+            self::$instance = new \PDO($sql, $config['USERNAME'], $config['PASSWORD']);
             self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch(\PDOException $exception) {
             http_response_code(500);
-            die($exception->getCode());
+            die($exception->getMessage());
         }
     }
+
 }
