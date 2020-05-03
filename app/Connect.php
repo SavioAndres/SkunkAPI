@@ -8,9 +8,7 @@ abstract class Connect
 
     protected static function connect() : object
     {
-        if (is_null(self::$instance)) {
-            self::sqlConn();
-        }
+        if (is_null(self::$instance)) self::sqlConn();
         return self::$instance;
     }
 
