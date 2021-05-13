@@ -10,7 +10,7 @@
     <script>
         var app = angular.module("app", []);
         app.controller("index", function($http, $scope){
-            $http.get("http://localhost/api").then(function(response) {
+            $http.get("http://localhost:8100/api").then(function(response) {
                 $scope.index = response.data;
             });
         });

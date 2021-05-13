@@ -21,6 +21,4 @@ if (array_key_exists($request[2], $routes)) {
     } else {
         echo 'A classe "' . $routes[$request[2]] . '" definida em Routes não foi implementada.';
     }
-} else {
-    http_response_code(404);
-}
+} else { http_response_code(404); }

@@ -25,7 +25,7 @@ function _DELETE()
     return $_DELETE;
 }
 
-function test()
+function _DETECT_INT(string $parameter)
 {
-    echo 'Funciona!';
+    return is_numeric($parameter) ? intval($parameter) : $parameter;
 }

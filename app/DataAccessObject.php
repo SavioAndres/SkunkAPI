@@ -13,6 +13,7 @@ class DataAccessObject extends Connect
             //$sql = 'INSERT INTO test (name, text) VALUES (\'primeiro\', \'ttttt\')';
             $stmt = Connect::connect()->prepare($sql);
             $stmt->execute();
+            return Connect::connect()->lastInsertId();
         } catch (\Exception $e) {
             http_response_code(416);
             echo $e->getMessage();
