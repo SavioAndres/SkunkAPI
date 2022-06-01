@@ -7,6 +7,15 @@ use App\Connect;
 class DataAccessObject extends Connect
 {
 
+    /**
+     * Função responsável por receber o nome da tabela do 
+     * banco de dados e JSON com os dados a serem inseridos
+     * 
+     * @access protected
+     * @package app
+     * @param string $sql
+     * @return int ID do registro
+     */
     protected function _insert(string $sql)
     {
         try {
